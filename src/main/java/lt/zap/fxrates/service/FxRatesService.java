@@ -1,18 +1,24 @@
 package lt.zap.fxrates.service;
 
-import lt.zap.fxrates.model.FxRates;
-import lt.zap.fxrates.repository.CcyAmtRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import lt.zap.fxrates.client.FxRatesClient;
+import lt.zap.fxrates.repository.ExchangeRatioRepository;
 import org.springframework.stereotype.Service;
 
-@Service
-public class FxRatesService {
-    @Autowired
-    private CcyAmtRepository repository;
-    @Autowired
-    private FxRatesClient fxRatesClient;
+import java.net.URISyntaxException;
 
-    public FxRates findAll(){
-        return fxRatesClient.getRates();
+@Service
+@Slf4j
+@AllArgsConstructor
+public class FxRatesService {
+
+    private final ExchangeRatioRepository repository;
+
+    private final FxRatesClient fxRatesClient;
+
+    public void updateCurrencyRatios() throws URISyntaxException{
+        repository.saveAll(fxRatesClient.getRates());
+        log.info("Currency ratios updated");
     }
 }
