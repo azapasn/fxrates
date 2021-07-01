@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +23,16 @@ public class LbApiConfig {
 
     @Value("${fx.currencyHistory}")
     private String currencyHistoryLink;
+
+    public String getCurrencyHistoryLink(String currency, String dtFrom, String dtTo){
+        UriComponentsBuilder builder = UriComponentsBuilder
+                .fromHttpUrl(this.currencyHistoryLink)
+                .queryParam("tp", "")
+                .queryParam("ccy", currency)
+                .queryParam("dtFrom", dtFrom)
+                .queryParam("dtTo", dtTo);
+        return builder.toUriString();
+    }
 
     @Bean
     public RestTemplate restTemplate(){
