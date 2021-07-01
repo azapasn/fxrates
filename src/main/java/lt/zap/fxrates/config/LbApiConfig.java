@@ -20,6 +20,9 @@ public class LbApiConfig {
     @Value("${fx.currencyList}")
     private String currencyListLink;
 
+    @Value("${fx.currencyHistory}")
+    private String currencyHistoryLink;
+
     @Bean
     public RestTemplate restTemplate(){
         RestTemplate restTemplate = new RestTemplate();

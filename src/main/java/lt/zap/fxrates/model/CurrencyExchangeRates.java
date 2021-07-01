@@ -26,6 +26,8 @@ public class CurrencyExchangeRates {
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlRootElement(name = "FxRate")
     public static class ExchangeRate {
+        @XmlElement(name="Dt", namespace = "http://www.lb.lt/WebServices/FxRates")
+        private String date;
         @XmlElement(name = "CcyAmt", namespace = "http://www.lb.lt/WebServices/FxRates")
         private List<ExchangeRatio> exchangeRatio;
     }

@@ -41,5 +41,19 @@ public class FxRatesClient {
             throw e;
         }
     }
+    public List<CurrencyExchangeRates.ExchangeRate> getRatesForCurrency(String currency, String dateFrom, String dateTo) throws URISyntaxException {
+        try {
+            List<CurrencyExchangeRates.ExchangeRate> rateList = Optional
+                    .ofNullable(restTemplate
+                            .getForObject(new URI(config.getCurrencyHistoryLink() + "?tp=&ccy=" + currency + "&dtFrom=" + dateFrom + "&dtTo=" + dateTo), CurrencyExchangeRates.class))
+                    .orElseThrow(MissingCurrencyRatiosException::new)
+                    .getRateList();
+            log.info("Got [" + rateList.size() + "] exchange rates for currency " + currency + " from external LB api");
+            return rateList;
+        } catch (URISyntaxException e) {
+            log.error("URI syntax exception: " + config.getCurrencyListLink());
+            throw e;
+        }
+    }
 }
 
