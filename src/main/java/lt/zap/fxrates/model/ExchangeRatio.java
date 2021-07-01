@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lt.zap.fxrates.exception.CurrencyNotFoundException;
+import lt.zap.fxrates.exception.MissingCurrencyRatiosException;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -34,6 +36,6 @@ public class ExchangeRatio {
                 .stream()
                 .filter(item -> !item.getCurrency().equals("EUR"))
                 .findFirst()
-                .orElseThrow(NullPointerException::new);
+                .orElseThrow(CurrencyNotFoundException::new);
     }
 }
